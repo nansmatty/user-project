@@ -57,7 +57,25 @@ const getRole = asyncHandler(async (req, res) => {
 	}
 });
 
+// @desc    Get Role by Id
+// @route   GET /api/role/:id
+// @access  Private/Admin
+
+const getRoleById = asyncHandler(
+	async (req, res) => {
+		try {
+			const roles = await Role.findById(
+				req.params.id
+			);
+			res.status(200).json(roles);
+		} catch (error) {
+			console.error(`Error: ${error}`);
+		}
+	}
+);
+
 module.exports = {
 	createRole,
 	getRole,
+	getRoleById,
 };

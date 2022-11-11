@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const roleRoutes = require("./routes/roleRoutes");
+const userRoutes = require("./routes/userRoutes");
 const {
 	notFound,
 	errorHandler,
@@ -19,6 +20,7 @@ app.use(express.json());
 
 //routes
 app.use("/api/role", roleRoutes);
+app.use("/api/user", userRoutes);
 
 //error-middleware
 app.use(notFound);
