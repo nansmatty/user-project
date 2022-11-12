@@ -71,13 +71,15 @@ const CreateUser = () => {
 	return (
 		<>
 			{/* Button trigger modal */}
-			<button
-				type='button'
-				className='btn btn-primary'
-				data-bs-toggle='modal'
-				data-bs-target='#createModal'>
-				<b>Add User</b>
-			</button>
+			<div>
+				<button
+					type='button'
+					className='btn btn-primary'
+					data-bs-toggle='modal'
+					data-bs-target='#createModal'>
+					<b>Add User</b>
+				</button>
+			</div>
 
 			{/* Modal */}
 			<div

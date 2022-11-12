@@ -4,7 +4,7 @@ import React, {
 } from "react";
 import axios from "axios";
 
-const FilterList = () => {
+const RoleFilterList = () => {
 	const [rolesData, setRolesData] = useState([]);
 	const [role, setRole] = useState("");
 
@@ -64,4 +64,4 @@ const FilterList = () => {
 	);
 };
 
-export default FilterList;
+export default RoleFilterList;

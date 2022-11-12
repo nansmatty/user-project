@@ -1,7 +1,8 @@
 import CreateUser from "./components/CreateUser";
 import { ToastContainer } from "react-toastify";
 import UsersList from "./components/UsersList";
-import FilterList from "./components/FilterList";
+import RoleFilterList from "./components/RoleFilterList";
+import DateFilterList from "./components/DateFilterList";
 
 const App = () => {
 	return (
@@ -11,7 +12,8 @@ const App = () => {
 				<ToastContainer />
 				<div className='mb-5 d-flex'>
 					<CreateUser />
-					<FilterList />
+					<RoleFilterList />
+					<DateFilterList />
 				</div>
 				<UsersList />
 			</div>
