@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "24a9c29b-61a1-4b87-96db-568bfb649990",
+		"name": "UserData",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "5505455"
+	},
+	"item": [
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role_name\" : \"Cook\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5000/api/role/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:5000/api/role/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get role by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:5000/api/role/636e3192fccc4014aa4b5e05"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Sanjot Kheer\",\r\n    \"email\": \"sanjoyt@gmail.com\",\r\n    \"role\": \"636e4d379e13427a66786916\",\r\n    \"job_preference\": [\"Mumbai\", \"Ahemdabad\", \"Delhi\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5000/api/user/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:5000/api/user/"
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"johndoe@gmail.com\",\r\n    \"role\": \"636e30be9139c7c3b37c3b63\",\r\n    \"job_preference\": [\"Mumbai\", \"Bangalore\", \"Delhi\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:5000/api/user/636e658ab18d16f9c7ce7e2f"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:5000/api/user/636e658ab18d16f9c7ce7e2f"
+					},
+					"response": []
+				},
+				{
+					"name": "Get users by role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:5000/api/user/role/admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Get users by date range",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/user/date_range?startDate=2022-11-12&endDate=2022-11-14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"date_range"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2022-11-12"
+								},
+								{
+									"key": "endDate",
+									"value": "2022-11-14"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get users by date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/user/date?qDate=2022-11-11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"date"
+							],
+							"query": [
+								{
+									"key": "qDate",
+									"value": "2022-11-11"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
