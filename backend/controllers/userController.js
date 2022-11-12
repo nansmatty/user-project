@@ -79,6 +79,25 @@ const getAllUsers = asyncHandler(
 	}
 );
 
+// @desc    Find users based on time period
+// @route   GET /api/user/:id
+// @access  Public
+
+const getUserById = asyncHandler(
+	async (req, res) => {
+		const user = await User.findById(
+			req.params.id
+		);
+
+		if (!user) {
+			res.status(400);
+			throw new Error("User not found");
+		}
+
+		res.status(200).json(user);
+	}
+);
+
 // @desc    Update users
 // @route   PUT /api/user/:id
 // @access  Public
@@ -179,16 +198,32 @@ const getUserByDate = asyncHandler(
 	async (req, res) => {
 		try {
 			//get date from req.query
-			let { qDate } = req.query;
+			let { qDate, pageNumber } = req.query;
 			let hour = 23,
 				minute = 59,
 				seconds = 59;
+
+			const pageSize = 10;
+			const page = Number(pageNumber) || 1;
 
 			// check that date is not empty
 			if (qDate === "") {
 				return res.status(400);
 				throw new Error("Invalid Data");
 			}
+
+			const count = await User.find({
+				created_at: {
+					$gte: new Date(qDate),
+					$lte: new Date(
+						new Date(qDate).setHours(
+							hour,
+							minute,
+							seconds
+						)
+					),
+				},
+			}).countDocuments();
 
 			//Query database using Mongoose
 			const users = await User.find({
@@ -202,7 +237,10 @@ const getUserByDate = asyncHandler(
 						)
 					),
 				},
-			}).sort({ created_at: "asc" });
+			})
+				.sort({ created_at: "asc" })
+				.limit(pageSize)
+				.skip(pageSize * (page - 1));
 
 			//Handeling response
 			if (!users) {
@@ -210,7 +248,11 @@ const getUserByDate = asyncHandler(
 				throw new Error("Error on request");
 			}
 
-			res.status(200).json(users);
+			res.json({
+				users,
+				page,
+				pages: Math.ceil(count / pageSize),
+			});
 		} catch (error) {
 			console.error(`Error: ${error.msg}`);
 		}
@@ -225,7 +267,15 @@ const getUserByDateRange = asyncHandler(
 	async (req, res) => {
 		try {
 			//get dates from req.query
-			let { startDate, endDate } = req.query;
+			let { startDate, endDate, pageNumber } =
+				req.query;
+
+			let hour = 23,
+				minute = 59,
+				seconds = 59;
+
+			const pageSize = 10;
+			const page = Number(pageNumber) || 1;
 
 			// check that date is not empty
 			if (startDate === "" || endDate === "") {
@@ -233,15 +283,35 @@ const getUserByDateRange = asyncHandler(
 				throw new Error("Invalid Data");
 			}
 
+			const count = await User.find({
+				created_at: {
+					$gte: new Date(qDate),
+					$lte: new Date(
+						new Date(qDate).setHours(
+							hour,
+							minute,
+							seconds
+						)
+					),
+				},
+			}).countDocuments();
+
 			//Query database using Mongoose
 			const users = await User.find({
 				created_at: {
 					$gte: new Date(startDate),
 					$lte: new Date(
-						new Date(endDate).setHours(23, 59, 59)
+						new Date(endDate).setHours(
+							hour,
+							minute,
+							seconds
+						)
 					),
 				},
-			}).sort({ created_at: "asc" });
+			})
+				.sort({ created_at: "asc" })
+				.limit(pageSize)
+				.skip(pageSize * (page - 1));
 
 			//Handeling response
 			if (!users) {
@@ -249,7 +319,11 @@ const getUserByDateRange = asyncHandler(
 				throw new Error("Error on request");
 			}
 
-			res.status(200).json(users);
+			res.json({
+				users,
+				page,
+				pages: Math.ceil(count / pageSize),
+			});
 		} catch (error) {
 			console.error(`Error: ${error.msg}`);
 		}
@@ -259,6 +333,7 @@ const getUserByDateRange = asyncHandler(
 module.exports = {
 	createUser,
 	getAllUsers,
+	getUserById,
 	updateUser,
 	deleteUser,
 	getUserByRole,

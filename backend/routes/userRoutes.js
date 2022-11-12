@@ -7,6 +7,7 @@ const {
 	getUserByRole,
 	getUserByDateRange,
 	getUserByDate,
+	getUserById,
 } = require("../controllers/userController");
 const {
 	validUserDetails,
@@ -20,6 +21,7 @@ router
 
 router
 	.route("/:id")
+	.get(getUserById)
 	.put(validUserDetails, updateUser)
 	.delete(deleteUser);
 

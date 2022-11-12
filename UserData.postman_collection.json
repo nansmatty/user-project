@@ -170,6 +170,15 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get user by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:5000/api/user/636e655c14ac5cafe6d71d00"
+					},
+					"response": []
 				}
 			]
 		}
