@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import Select from "react-select";
 import options from "../states.json";
 import makeAnimated from "react-select/animated";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { useEffect } from "react";
 
@@ -32,34 +33,39 @@ const CreateUser = () => {
 		setRole(event.target.value);
 	};
 
-	const handleMultiSelectChange = (val) => {
-		setMultiSelect(val);
+	const handleMultiSelectChange = (options) => {
+		setMultiSelect(options);
+		const values = options.map(
+			(opt) => opt.value
+		);
+		setJobPreference([...values]);
 	};
 
-	const handleJobPreference = () => {
-		multiSelect?.map((select) =>
-			setJobPreference((prev) => [
-				...prev,
-				select.value,
-			])
-		);
-
-		console.log("JOB: " + job_preference);
+	const resetFields = () => {
+		setName("");
+		setEmail("");
+		setMultiSelect("");
+		setRole("");
 	};
 
 	useEffect(() => {
 		handleRoles();
 	}, []);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		handleJobPreference();
-		console.log({
-			name,
-			email,
-			role,
-			job_preference,
-		});
+		const { data } = await axios.post(
+			`/api/user`,
+			{
+				name,
+				email,
+				role,
+				job_preference,
+			}
+		);
+		toast.success("User created successfully");
+
+		resetFields();
 	};
 
 	return (
@@ -138,7 +144,7 @@ const CreateUser = () => {
 												<option
 													className='option'
 													key={_id}
-													value={_id}>
+													value={role_name}>
 													{role_name}
 												</option>
 											)
@@ -176,7 +182,8 @@ const CreateUser = () => {
 								</button>
 								<button
 									type='submit'
-									className='btn btn-primary'>
+									className='btn btn-primary'
+									data-bs-dismiss='modal'>
 									Submit
 								</button>
 							</div>
