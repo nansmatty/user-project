@@ -15,8 +15,7 @@ const userSchema = new Schema(
 			lowercase: true,
 		},
 		role: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Roles",
+			type: String,
 			required: true,
 		},
 		job_preference: [
