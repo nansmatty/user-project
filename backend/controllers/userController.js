@@ -172,8 +172,89 @@ const getUserByRole = asyncHandler(
 );
 
 // @desc    Find users based on time period
-// @route   GET /api/user/role/:id
+// @route   GET /api/user/date
 // @access  Public
+
+const getUserByDate = asyncHandler(
+	async (req, res) => {
+		try {
+			//get date from req.query
+			let { qDate } = req.query;
+			let hour = 23,
+				minute = 59,
+				seconds = 59;
+
+			// check that date is not empty
+			if (qDate === "") {
+				return res.status(400);
+				throw new Error("Invalid Data");
+			}
+
+			//Query database using Mongoose
+			const users = await User.find({
+				created_at: {
+					$gte: new Date(qDate),
+					$lte: new Date(
+						new Date(qDate).setHours(
+							hour,
+							minute,
+							seconds
+						)
+					),
+				},
+			}).sort({ created_at: "asc" });
+
+			//Handeling response
+			if (!users) {
+				res.status(404);
+				throw new Error("Error on request");
+			}
+
+			res.status(200).json(users);
+		} catch (error) {
+			console.error(`Error: ${error.msg}`);
+		}
+	}
+);
+
+// @desc    Find users based on time period
+// @route   GET /api/user/date_range
+// @access  Public
+
+const getUserByDateRange = asyncHandler(
+	async (req, res) => {
+		try {
+			//get dates from req.query
+			let { startDate, endDate } = req.query;
+
+			// check that date is not empty
+			if (startDate === "" || endDate === "") {
+				return res.status(400);
+				throw new Error("Invalid Data");
+			}
+
+			//Query database using Mongoose
+			const users = await User.find({
+				created_at: {
+					$gte: new Date(startDate),
+					$lte: new Date(
+						new Date(endDate).setHours(23, 59, 59)
+					),
+				},
+			}).sort({ created_at: "asc" });
+
+			//Handeling response
+			if (!users) {
+				res.status(404);
+				throw new Error("Error on request");
+			}
+
+			res.status(200).json(users);
+		} catch (error) {
+			console.error(`Error: ${error.msg}`);
+		}
+	}
+);
 
 module.exports = {
 	createUser,
@@ -181,4 +262,6 @@ module.exports = {
 	updateUser,
 	deleteUser,
 	getUserByRole,
+	getUserByDate,
+	getUserByDateRange,
 };

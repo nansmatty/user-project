@@ -5,6 +5,8 @@ const {
 	updateUser,
 	deleteUser,
 	getUserByRole,
+	getUserByDateRange,
+	getUserByDate,
 } = require("../controllers/userController");
 const {
 	validUserDetails,
@@ -22,5 +24,7 @@ router
 	.delete(deleteUser);
 
 router.get("/role/:role_name", getUserByRole);
+router.get("/date", getUserByDate);
+router.get("/date_range", getUserByDateRange);
 
 module.exports = router;
