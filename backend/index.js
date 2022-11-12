@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const connectDB = require("./config/db");
 const roleRoutes = require("./routes/roleRoutes");
 const userRoutes = require("./routes/userRoutes");
@@ -17,6 +18,7 @@ connectDB();
 
 //middlewares
 app.use(express.json());
+app.use(cors());
 
 //routes
 app.use("/api/role", roleRoutes);

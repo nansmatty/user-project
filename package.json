@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "node backend/index",
 		"server": "nodemon backend/index",
-		"client": "npm start --prefix frontend",
+		"client": "npm start --prefix client",
 		"dev": "concurrently \"npm run server\" \"npm run client\""
 	},
 	"keywords": [
@@ -18,6 +18,7 @@
 	"author": "Narayan Maity",
 	"license": "ISC",
 	"dependencies": {
+		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
 		"express": "^4.18.2",
 		"express-async-handler": "^1.2.0",
