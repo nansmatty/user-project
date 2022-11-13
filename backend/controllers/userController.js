@@ -3,7 +3,6 @@ const {
 } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/UserModel");
-const Role = require("../models/RoleModel");
 
 // @desc    Create User
 // @route   POST /api/user
@@ -62,7 +61,7 @@ const createUser = asyncHandler(
 
 const getAllUsers = asyncHandler(
 	async (req, res) => {
-		const pageSize = 10;
+		const pageSize = 30;
 		const page =
 			Number(req.query.pageNumber) || 1;
 
@@ -163,20 +162,16 @@ const deleteUser = asyncHandler(
 
 const getUserByRole = asyncHandler(
 	async (req, res) => {
-		const roleData = await Role.findOne({
-			role_name: req.params.role_name,
-		});
-
 		const pageSize = 10;
 		const page =
 			Number(req.query.pageNumber) || 1;
 
 		const count = await User.find({
-			role: roleData._id,
+			role: req.params.role_name,
 		}).countDocuments();
 
 		const users = await User.find({
-			role: roleData._id,
+			role: req.params.role_name,
 		})
 			.find()
 			.limit(pageSize)

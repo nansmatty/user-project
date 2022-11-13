@@ -4,7 +4,7 @@ import React, {
 } from "react";
 import axios from "axios";
 
-const RoleFilterList = () => {
+const RoleFilterList = ({ users, setUsers }) => {
 	const [rolesData, setRolesData] = useState([]);
 	const [role, setRole] = useState("");
 
@@ -23,7 +23,9 @@ const RoleFilterList = () => {
 			`/api/user/role/${role}`
 		);
 
-		console.log(data.users);
+		// console.log(data);
+
+		setUsers(data.users);
 	};
 
 	useEffect(() => {
@@ -41,6 +43,11 @@ const RoleFilterList = () => {
 							className='form-select option'
 							value={role}
 							onChange={handleRoleChange}>
+							<option
+								className='option'
+								value='Select a Role'>
+								Select a Role
+							</option>
 							{rolesData?.map(
 								({ _id, role_name }) => (
 									<option

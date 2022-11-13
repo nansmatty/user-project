@@ -5,8 +5,9 @@ import makeAnimated from "react-select/animated";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useEffect } from "react";
+// import UsersList from "./UsersList";
 
-const CreateUser = () => {
+const CreateUser = ({ usersList }) => {
 	const [rolesData, setRolesData] = useState([]);
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
@@ -64,7 +65,6 @@ const CreateUser = () => {
 			}
 		);
 		toast.success("User created successfully");
-
 		resetFields();
 	};
 

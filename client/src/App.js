@@ -1,8 +1,8 @@
-import CreateUser from "./components/CreateUser";
 import { ToastContainer } from "react-toastify";
 import UsersList from "./components/UsersList";
-import RoleFilterList from "./components/RoleFilterList";
-import DateFilterList from "./components/DateFilterList";
+// import RoleFilterList from "./components/RoleFilterList";
+// import CreateUser from "./components/CreateUser";
+// import DateFilterList from "./components/DateFilterList";
 
 const App = () => {
 	return (
@@ -10,11 +10,7 @@ const App = () => {
 			<div className='container d-flex flex-column p-2 '>
 				<h3 className='heading1'>User Data</h3>
 				<ToastContainer />
-				<div className='mb-5 d-flex'>
-					<CreateUser />
-					<RoleFilterList />
-					<DateFilterList />
-				</div>
+
 				<UsersList />
 			</div>
 		</div>

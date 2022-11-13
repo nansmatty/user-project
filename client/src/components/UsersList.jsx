@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import CreateUser from "./CreateUser";
+import RoleFilterList from "./RoleFilterList";
+import DateFilterList from "./DateFilterList";
 
 const UsersList = () => {
 	const [users, setUsers] = useState([]);
@@ -15,6 +18,17 @@ const UsersList = () => {
 
 	return (
 		<>
+			<div className='mb-5 d-flex'>
+				<CreateUser />
+				<RoleFilterList
+					users={users}
+					setUsers={setUsers}
+				/>
+				<DateFilterList
+					users={users}
+					setUsers={setUsers}
+				/>
+			</div>
 			<table className='table table-striped'>
 				<thead>
 					<tr>
