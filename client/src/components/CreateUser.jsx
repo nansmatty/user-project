@@ -7,7 +7,7 @@ import axios from "axios";
 import { useEffect } from "react";
 // import UsersList from "./UsersList";
 
-const CreateUser = ({ usersList }) => {
+const CreateUser = ({ setUsers }) => {
 	const [rolesData, setRolesData] = useState([]);
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
@@ -32,6 +32,11 @@ const CreateUser = ({ usersList }) => {
 
 	const handleRoleChange = (event) => {
 		setRole(event.target.value);
+	};
+
+	const usersList = async () => {
+		const { data } = await axios.get("/api/user");
+		setUsers(data.users);
 	};
 
 	const handleMultiSelectChange = (options) => {
@@ -65,6 +70,7 @@ const CreateUser = ({ usersList }) => {
 			}
 		);
 		toast.success("User created successfully");
+		usersList();
 		resetFields();
 	};
 

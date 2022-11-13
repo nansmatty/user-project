@@ -14,12 +14,12 @@ const UsersList = () => {
 
 	useEffect(() => {
 		usersList();
-	}, [users]);
+	}, []);
 
 	return (
 		<>
 			<div className='mb-5 d-flex'>
-				<CreateUser />
+				<CreateUser setUsers={setUsers} />
 				<RoleFilterList
 					users={users}
 					setUsers={setUsers}
