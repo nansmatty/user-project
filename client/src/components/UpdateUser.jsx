@@ -10,7 +10,11 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { BiEdit } from "react-icons/bi";
 
-const UpdateUser = ({ id, setUsers }) => {
+const UpdateUser = ({
+	id,
+	setUsers,
+	setPages,
+}) => {
 	const animatedComponents = makeAnimated();
 	const [rolesData, setRolesData] = useState([]);
 	const [name, setName] = useState("");
@@ -58,6 +62,7 @@ const UpdateUser = ({ id, setUsers }) => {
 	const usersList = async () => {
 		const { data } = await axios.get("/api/user");
 		setUsers(data.users);
+		setPages(data.pages);
 	};
 
 	const handleMultiSelectChange = (options) => {

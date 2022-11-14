@@ -7,13 +7,11 @@ const DeleteUser = ({
 	id,
 	setUsers,
 	setPages,
-	setPage,
 }) => {
 	const usersList = async () => {
 		const { data } = await axios.get("/api/user");
 		setUsers(data.users);
 		setPages(data.pages);
-		setPage(data.page);
 	};
 
 	const handleDelete = async (id) => {

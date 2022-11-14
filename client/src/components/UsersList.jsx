@@ -11,11 +11,8 @@ import Paginate from "./Paginate";
 const UsersList = () => {
 	const { pageNumber } = useParams();
 
-	console.log("Log from UsersList", pageNumber);
-
 	const [users, setUsers] = useState([]);
 	const [pages, setPages] = useState();
-	const [page, setPage] = useState();
 
 	const usersList = async () => {
 		const { data } = await axios.get(
@@ -24,7 +21,6 @@ const UsersList = () => {
 		);
 		setUsers(data.users);
 		setPages(data.pages);
-		setPage(data.page);
 	};
 
 	useEffect(() => {
@@ -45,14 +41,9 @@ const UsersList = () => {
 				<CreateUser
 					setUsers={setUsers}
 					setPages={setPages}
-					setPage={setPage}
 				/>
 				<RoleFilterList setUsers={setUsers} />
-				<DateFilterList
-					setUsers={setUsers}
-					setPages={setPages}
-					setPage={setPage}
-				/>
+				<DateFilterList setUsers={setUsers} />
 			</div>
 			<div className='row'>
 				{users?.map(
@@ -92,13 +83,11 @@ const UsersList = () => {
 											id={_id}
 											setUsers={setUsers}
 											setPages={setPages}
-											setPage={setPage}
 										/>
 										<DeleteUser
 											id={_id}
 											setUsers={setUsers}
 											setPages={setPages}
-											setPage={setPage}
 										/>
 									</div>
 								</div>
@@ -108,7 +97,7 @@ const UsersList = () => {
 				)}
 			</div>
 			<div>
-				<Paginate pages={pages} page={page} />
+				<Paginate pages={pages} />
 			</div>
 		</>
 	);

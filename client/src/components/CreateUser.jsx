@@ -6,11 +6,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useEffect } from "react";
 
-const CreateUser = ({
-	setUsers,
-	setPages,
-	setPage,
-}) => {
+const CreateUser = ({ setUsers, setPages }) => {
 	const [rolesData, setRolesData] = useState([]);
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
@@ -41,7 +37,6 @@ const CreateUser = ({
 		const { data } = await axios.get("/api/user");
 		setUsers(data.users);
 		setPages(data.pages);
-		setPage(data.page);
 	};
 
 	const handleMultiSelectChange = (options) => {
