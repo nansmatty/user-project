@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { AiFillDelete } from "react-icons/ai";
 import CreateUser from "./CreateUser";
 import RoleFilterList from "./RoleFilterList";
 import DateFilterList from "./DateFilterList";
+import DeleteUser from "./DeleteUser";
 
 const UsersList = () => {
 	const [users, setUsers] = useState([]);
@@ -19,15 +22,17 @@ const UsersList = () => {
 	return (
 		<>
 			<div className='mb-5 d-flex'>
+				<div className='me-2'>
+					<button
+						type='button'
+						className='btn btn-warning'
+						onClick={usersList}>
+						<b>Show All</b>
+					</button>
+				</div>
 				<CreateUser setUsers={setUsers} />
-				<RoleFilterList
-					users={users}
-					setUsers={setUsers}
-				/>
-				<DateFilterList
-					users={users}
-					setUsers={setUsers}
-				/>
+				<RoleFilterList setUsers={setUsers} />
+				<DateFilterList setUsers={setUsers} />
 			</div>
 			<table className='table table-striped'>
 				<thead>
@@ -36,6 +41,7 @@ const UsersList = () => {
 						<th scope='col'>Email</th>
 						<th scope='col'>Role</th>
 						<th scope='col'>Job Preference</th>
+						<th scope='col'>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -60,6 +66,13 @@ const UsersList = () => {
 											</span>
 										)
 									)}
+								</td>
+								<td>
+									{/* <button className=''></button> */}
+									<DeleteUser
+										id={_id}
+										setUsers={setUsers}
+									/>
 								</td>
 							</tr>
 						)

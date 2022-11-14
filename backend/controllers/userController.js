@@ -203,7 +203,7 @@ const getUserByDate = asyncHandler(
 
 			// check that date is not empty
 			if (qDate === "") {
-				return res.status(400);
+				res.status(400);
 				throw new Error("Invalid Data");
 			}
 
@@ -274,15 +274,15 @@ const getUserByDateRange = asyncHandler(
 
 			// check that date is not empty
 			if (startDate === "" || endDate === "") {
-				return res.status(400);
+				res.status(400);
 				throw new Error("Invalid Data");
 			}
 
 			const count = await User.find({
 				created_at: {
-					$gte: new Date(qDate),
+					$gte: new Date(startDate),
 					$lte: new Date(
-						new Date(qDate).setHours(
+						new Date(endDate).setHours(
 							hour,
 							minute,
 							seconds

@@ -5,7 +5,6 @@ import makeAnimated from "react-select/animated";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useEffect } from "react";
-// import UsersList from "./UsersList";
 
 const CreateUser = ({ setUsers }) => {
 	const [rolesData, setRolesData] = useState([]);

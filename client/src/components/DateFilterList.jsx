@@ -1,13 +1,20 @@
+import axios from "axios";
 import React from "react";
 import { useState } from "react";
 
-const DateFilterList = () => {
+const DateFilterList = ({ setUsers }) => {
 	const [startDate, setStartDate] = useState("");
 	const [endDate, setEndDate] = useState("");
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		console.log({ startDate, endDate });
+
+		const { data } = await axios.get(
+			"/api/user/date_range",
+			{ params: { startDate, endDate } }
+		);
+
+		setUsers(data.users);
 	};
 
 	return (

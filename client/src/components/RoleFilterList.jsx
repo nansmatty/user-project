@@ -4,7 +4,7 @@ import React, {
 } from "react";
 import axios from "axios";
 
-const RoleFilterList = ({ users, setUsers }) => {
+const RoleFilterList = ({ setUsers }) => {
 	const [rolesData, setRolesData] = useState([]);
 	const [role, setRole] = useState("");
 

@@ -19,14 +19,14 @@ router
 	.post(validUserDetails, createUser)
 	.get(getAllUsers);
 
-router
-	.route("/:id")
-	.get(getUserById)
-	.put(validUserDetails, updateUser)
-	.delete(deleteUser);
-
 router.get("/role/:role_name", getUserByRole);
 router.get("/date", getUserByDate);
 router.get("/date_range", getUserByDateRange);
+
+router
+	.route("/:id")
+	.put(validUserDetails, updateUser)
+	.delete(deleteUser)
+	.get(getUserById);
 
 module.exports = router;
