@@ -1,16 +1,17 @@
-import { useMemo, useState } from "react";
+import {
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
 import Select from "react-select";
 import options from "../states.json";
 import makeAnimated from "react-select/animated";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useEffect } from "react";
+import { BiEdit } from "react-icons/bi";
 
-const CreateUser = ({
-	setUsers,
-	setPages,
-	setPage,
-}) => {
+const UpdateUser = ({ id, setUsers }) => {
+	const animatedComponents = makeAnimated();
 	const [rolesData, setRolesData] = useState([]);
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
@@ -21,12 +22,29 @@ const CreateUser = ({
 		[]
 	);
 
-	const animatedComponents = makeAnimated();
-
 	const states = useMemo(
 		() => options.stateList,
 		[]
 	);
+
+	const fetchDataBasedOnID = async (id) => {
+		const { data } = await axios.get(
+			`/api/user/${id}`
+		);
+
+		getDataOfMultiSelect(data);
+	};
+
+	const getDataOfMultiSelect = (data) => {
+		const result = states.filter((state) =>
+			data.job_preference.includes(state.value)
+		);
+
+		setMultiSelect(result);
+		setName(data.name);
+		setEmail(data.email);
+		setRole(data.role);
+	};
 
 	const handleRoles = async () => {
 		const { data } = await axios.get(`/api/role`);
@@ -40,8 +58,6 @@ const CreateUser = ({
 	const usersList = async () => {
 		const { data } = await axios.get("/api/user");
 		setUsers(data.users);
-		setPages(data.pages);
-		setPage(data.page);
 	};
 
 	const handleMultiSelectChange = (options) => {
@@ -65,13 +81,13 @@ const CreateUser = ({
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		await axios.post(`/api/user`, {
+		await axios.put(`/api/user/${id}`, {
 			name,
 			email,
 			role,
 			job_preference,
 		});
-		toast.success("User created successfully");
+		toast.success("User updated successfully");
 		usersList();
 		resetFields();
 	};
@@ -82,17 +98,18 @@ const CreateUser = ({
 			<div>
 				<button
 					type='button'
-					className='btn btn-primary'
+					onClick={() => fetchDataBasedOnID(id)}
+					className='btn btn-warning'
 					data-bs-toggle='modal'
-					data-bs-target='#createModal'>
-					<b>Add User</b>
+					data-bs-target='#updateModal'>
+					<BiEdit /> <strong>Update</strong>
 				</button>
 			</div>
 
 			{/* Modal */}
 			<div
 				className='modal fade'
-				id='createModal'
+				id='updateModal'
 				tabIndex='-1'
 				aria-hidden='true'>
 				<div className='modal-dialog modal-dialog-centered'>
@@ -101,7 +118,7 @@ const CreateUser = ({
 							<h1
 								className='modal-title fs-5'
 								id='exampleModalLabel'>
-								Create User
+								Update User
 							</h1>
 							<button
 								type='button'
@@ -195,9 +212,9 @@ const CreateUser = ({
 								</button>
 								<button
 									type='submit'
-									className='btn btn-primary'
+									className='btn btn-success'
 									data-bs-dismiss='modal'>
-									Submit
+									Save Changes
 								</button>
 							</div>
 						</form>
@@ -208,4 +225,4 @@ const CreateUser = ({
 	);
 };
 
-export default CreateUser;
+export default UpdateUser;

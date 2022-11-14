@@ -1,4 +1,5 @@
 import { ToastContainer } from "react-toastify";
+import { Routes, Route } from "react-router-dom";
 import UsersList from "./components/UsersList";
 
 const App = () => {
@@ -10,7 +11,16 @@ const App = () => {
 					position='bottom-center'
 					theme='colored'
 				/>
-				<UsersList />
+				<Routes>
+					<Route
+						path='/'
+						element={<UsersList />}
+					/>
+					<Route
+						path='/page/:pageNumber'
+						element={<UsersList />}
+					/>
+				</Routes>
 			</div>
 		</div>
 	);

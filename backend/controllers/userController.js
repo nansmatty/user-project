@@ -61,7 +61,7 @@ const createUser = asyncHandler(
 
 const getAllUsers = asyncHandler(
 	async (req, res) => {
-		const pageSize = 30;
+		const pageSize = 5;
 		const page =
 			Number(req.query.pageNumber) || 1;
 
@@ -162,25 +162,12 @@ const deleteUser = asyncHandler(
 
 const getUserByRole = asyncHandler(
 	async (req, res) => {
-		const pageSize = 10;
-		const page =
-			Number(req.query.pageNumber) || 1;
-
-		const count = await User.find({
-			role: req.params.role_name,
-		}).countDocuments();
-
 		const users = await User.find({
 			role: req.params.role_name,
-		})
-			.find()
-			.limit(pageSize)
-			.skip(pageSize * (page - 1));
+		});
 
 		res.json({
 			users,
-			page,
-			pages: Math.ceil(count / pageSize),
 		});
 	}
 );
@@ -198,27 +185,11 @@ const getUserByDate = asyncHandler(
 				minute = 59,
 				seconds = 59;
 
-			const pageSize = 10;
-			const page = Number(pageNumber) || 1;
-
 			// check that date is not empty
 			if (qDate === "") {
 				res.status(400);
 				throw new Error("Invalid Data");
 			}
-
-			const count = await User.find({
-				created_at: {
-					$gte: new Date(qDate),
-					$lte: new Date(
-						new Date(qDate).setHours(
-							hour,
-							minute,
-							seconds
-						)
-					),
-				},
-			}).countDocuments();
 
 			//Query database using Mongoose
 			const users = await User.find({
@@ -232,10 +203,7 @@ const getUserByDate = asyncHandler(
 						)
 					),
 				},
-			})
-				.sort({ created_at: "asc" })
-				.limit(pageSize)
-				.skip(pageSize * (page - 1));
+			});
 
 			//Handeling response
 			if (!users) {
@@ -245,8 +213,6 @@ const getUserByDate = asyncHandler(
 
 			res.json({
 				users,
-				page,
-				pages: Math.ceil(count / pageSize),
 			});
 		} catch (error) {
 			console.error(`Error: ${error.msg}`);
@@ -269,27 +235,11 @@ const getUserByDateRange = asyncHandler(
 				minute = 59,
 				seconds = 59;
 
-			const pageSize = 10;
-			const page = Number(pageNumber) || 1;
-
 			// check that date is not empty
 			if (startDate === "" || endDate === "") {
 				res.status(400);
 				throw new Error("Invalid Data");
 			}
-
-			const count = await User.find({
-				created_at: {
-					$gte: new Date(startDate),
-					$lte: new Date(
-						new Date(endDate).setHours(
-							hour,
-							minute,
-							seconds
-						)
-					),
-				},
-			}).countDocuments();
 
 			//Query database using Mongoose
 			const users = await User.find({
@@ -303,10 +253,7 @@ const getUserByDateRange = asyncHandler(
 						)
 					),
 				},
-			})
-				.sort({ created_at: "asc" })
-				.limit(pageSize)
-				.skip(pageSize * (page - 1));
+			});
 
 			//Handeling response
 			if (!users) {
@@ -316,8 +263,6 @@ const getUserByDateRange = asyncHandler(
 
 			res.json({
 				users,
-				page,
-				pages: Math.ceil(count / pageSize),
 			});
 		} catch (error) {
 			console.error(`Error: ${error.msg}`);

@@ -11,7 +11,12 @@ const DateFilterList = ({ setUsers }) => {
 
 		const { data } = await axios.get(
 			"/api/user/date_range",
-			{ params: { startDate, endDate } }
+			{
+				params: {
+					startDate,
+					endDate,
+				},
+			}
 		);
 
 		setUsers(data.users);

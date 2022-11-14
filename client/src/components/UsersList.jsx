@@ -1,23 +1,35 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { AiFillDelete } from "react-icons/ai";
 import CreateUser from "./CreateUser";
 import RoleFilterList from "./RoleFilterList";
 import DateFilterList from "./DateFilterList";
 import DeleteUser from "./DeleteUser";
+import UpdateUser from "./UpdateUser";
+import { useParams } from "react-router-dom";
+import Paginate from "./Paginate";
 
 const UsersList = () => {
+	const { pageNumber } = useParams();
+
+	console.log("Log from UsersList", pageNumber);
+
 	const [users, setUsers] = useState([]);
+	const [pages, setPages] = useState();
+	const [page, setPage] = useState();
 
 	const usersList = async () => {
-		const { data } = await axios.get("/api/user");
+		const { data } = await axios.get(
+			"/api/user",
+			{ params: { pageNumber: pageNumber || 1 } }
+		);
 		setUsers(data.users);
+		setPages(data.pages);
+		setPage(data.page);
 	};
 
 	useEffect(() => {
 		usersList();
-	}, []);
+	}, [pageNumber]);
 
 	return (
 		<>
@@ -30,55 +42,74 @@ const UsersList = () => {
 						<b>Show All</b>
 					</button>
 				</div>
-				<CreateUser setUsers={setUsers} />
+				<CreateUser
+					setUsers={setUsers}
+					setPages={setPages}
+					setPage={setPage}
+				/>
 				<RoleFilterList setUsers={setUsers} />
-				<DateFilterList setUsers={setUsers} />
+				<DateFilterList
+					setUsers={setUsers}
+					setPages={setPages}
+					setPage={setPage}
+				/>
 			</div>
-			<table className='table table-striped'>
-				<thead>
-					<tr>
-						<th scope='col'>Name</th>
-						<th scope='col'>Email</th>
-						<th scope='col'>Role</th>
-						<th scope='col'>Job Preference</th>
-						<th scope='col'>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					{users?.map(
-						({
-							_id,
-							name,
-							email,
-							role,
-							job_preference,
-						}) => (
-							<tr key={_id}>
-								<td>{name}</td>
-								<td>{email}</td>
-								<td className='option'>{role}</td>
-								<td>
-									{job_preference.map(
-										(job, index) => (
-											<span key={index}>
-												{job}
-												{", "}
-											</span>
-										)
-									)}
-								</td>
-								<td>
-									{/* <button className=''></button> */}
-									<DeleteUser
-										id={_id}
-										setUsers={setUsers}
-									/>
-								</td>
-							</tr>
-						)
-					)}
-				</tbody>
-			</table>
+			<div className='row'>
+				{users?.map(
+					({
+						_id,
+						name,
+						email,
+						role,
+						job_preference,
+					}) => (
+						<div key={_id} className='col-4 my-3'>
+							<div className='card'>
+								<div className='card-body'>
+									<h3 className='card-title'>
+										{name}
+									</h3>
+									<h6 className='card-subtitle option mb-2 text-muted'>
+										{role}
+									</h6>
+									<p className='card-text'>
+										<strong>Email: </strong>
+										<span>{email}</span>
+									</p>
+									<p className='card-text'>
+										<b>Job Preference: </b>
+										{job_preference.map(
+											(job, index) => (
+												<span key={index}>
+													{job}
+													{", "}
+												</span>
+											)
+										)}
+									</p>
+									<div className='d-flex gap-3'>
+										<UpdateUser
+											id={_id}
+											setUsers={setUsers}
+											setPages={setPages}
+											setPage={setPage}
+										/>
+										<DeleteUser
+											id={_id}
+											setUsers={setUsers}
+											setPages={setPages}
+											setPage={setPage}
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					)
+				)}
+			</div>
+			<div>
+				<Paginate pages={pages} page={page} />
+			</div>
 		</>
 	);
 };

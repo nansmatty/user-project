@@ -3,10 +3,17 @@ import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const DeleteUser = ({ id, setUsers }) => {
+const DeleteUser = ({
+	id,
+	setUsers,
+	setPages,
+	setPage,
+}) => {
 	const usersList = async () => {
 		const { data } = await axios.get("/api/user");
 		setUsers(data.users);
+		setPages(data.pages);
+		setPage(data.page);
 	};
 
 	const handleDelete = async (id) => {
@@ -21,10 +28,10 @@ const DeleteUser = ({ id, setUsers }) => {
 			<div>
 				<button
 					type='button'
-					className='btn btn-danger'
+					className='btn btn-danger d-flex align-items-center'
 					data-bs-toggle='modal'
 					data-bs-target='#deleteModal'>
-					<AiFillDelete />
+					<AiFillDelete /> <strong>Delete</strong>
 				</button>
 			</div>
 

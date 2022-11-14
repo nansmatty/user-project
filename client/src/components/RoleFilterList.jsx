@@ -43,9 +43,7 @@ const RoleFilterList = ({ setUsers }) => {
 							className='form-select option'
 							value={role}
 							onChange={handleRoleChange}>
-							<option
-								className='option'
-								value='Select a Role'>
+							<option className='option'>
 								Select a Role
 							</option>
 							{rolesData?.map(
