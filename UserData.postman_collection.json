@@ -78,6 +78,15 @@
 					"response": []
 				},
 				{
+					"name": "Get user by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:5000/api/user/636ff054b7d93117bdeb15f7"
+					},
+					"response": []
+				},
+				{
 					"name": "Update user",
 					"request": {
 						"method": "PUT",
@@ -114,43 +123,12 @@
 					"response": []
 				},
 				{
-					"name": "Get users by date range",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/user/date_range?startDate=2022-11-12&endDate=2022-11-14",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"user",
-								"date_range"
-							],
-							"query": [
-								{
-									"key": "startDate",
-									"value": "2022-11-12"
-								},
-								{
-									"key": "endDate",
-									"value": "2022-11-14"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get users by date",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/api/user/date?qDate=2022-11-11",
+							"raw": "http://localhost:5000/api/user/date?qDate=2022-11-13",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -164,7 +142,7 @@
 							"query": [
 								{
 									"key": "qDate",
-									"value": "2022-11-11"
+									"value": "2022-11-13"
 								}
 							]
 						}
@@ -172,11 +150,38 @@
 					"response": []
 				},
 				{
-					"name": "Get user by ID",
+					"name": "Get users by date range",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:5000/api/user/636e655c14ac5cafe6d71d00"
+						"url": {
+							"raw": "http://localhost:5000/api/user/date_range?startDate=2022-11-13&endDate=2022-11-14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"date_range"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2022-11-13"
+								},
+								{
+									"key": "endDate",
+									"value": "2022-11-14"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
 					},
 					"response": []
 				}
